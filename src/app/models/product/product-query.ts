@@ -3,6 +3,6 @@ export interface ProductQuery {
     name?: string,
     price?: number,
     lastUpdated?: Date
-    page: number,
-    itemsPerPage: number
+    page?: number,
+    itemsPerPage?: number
 }

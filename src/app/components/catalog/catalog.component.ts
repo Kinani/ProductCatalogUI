@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 export class CatalogComponent implements OnInit {
 
   productsQuery$: Observable<ProductQueryResults>;
+  query: string;
   environmnet = environment;
 
   constructor(private productService: ProductService) { }
@@ -21,10 +22,13 @@ export class CatalogComponent implements OnInit {
   }
 
   loadProducts() {
-    this.productsQuery$ = this.productService.getAll();
+    this.productsQuery$ = this.productService.getAll(this.query ? {
+      name: this.query
+    } : null);
   }
 
-  delete(id) {
+  onProductDeleted(id) {
+    debugger;
     const ans = confirm('Do you want to delete blog post with id: ' + id);
     if (ans) {
       // this.blogPostService.deleteBlogPost(postId).subscribe((data) => {

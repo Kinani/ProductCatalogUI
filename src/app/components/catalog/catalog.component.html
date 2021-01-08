@@ -1,3 +1,30 @@
+<div class="container">
+  <div class="form-group">
+    <label class="h2" for="query">Search in catalog by name</label>
+    <input id="query" type="text" class="form-control" [(ngModel)]="query" (keyup.enter)="loadProducts()">
+  </div>
+  <button type="button" (click)="loadProducts()" class="form-control btn btn-primary">Search</button>
+  <hr>
+  <div class="row">
+    <p *ngIf="!(productsQuery$ | async)"><em>Loading...</em></p>
+    <p>
+      <a [routerLink]="['/add']" class="btn btn-primary float-right mb-3">New product</a>
+    </p>
+  </div>
+  <div class="row" *ngIf="(productsQuery$ | async)?.items?.length>0">
+    <app-catalog-product *ngFor="let product of (productsQuery$ | async)?.items" [product]="product"
+      (onDelete)="onProductDeleted($event)" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12">
+    </app-catalog-product>
+  </div>
+</div>
+
+
+
+
+<!-- 
+
+
+
 <h1>Products catalog</h1>
 
 <p *ngIf="!(productsQuery$ | async)"><em>Loading...</em></p>
@@ -28,4 +55,4 @@
       <td><a [routerLink]="" (click)="delete(product.id)" class="btn btn-danger btn-sm float-right">Delete</a></td>
     </tr>
   </tbody>
-</table>
+</table> -->

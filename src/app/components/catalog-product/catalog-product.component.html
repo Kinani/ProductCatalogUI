@@ -1,0 +1,21 @@
+<div class="card">
+  <img [src]="environmnet.apiUrl + '/' + product.photo" class="card-img-top" [alt]="product.name">
+  <div class="card-body">
+    <h5 class="card-title">
+      {{ product.name }}
+    </h5>
+    <p class="card-text">
+      <b>{{ product.name }}</b> costs <b>{{ product.price }} EGP</b> and was last updated in
+      <i>{{ product.lastUpdated | date: 'dd/MM/yyyy HH:mm'}}</i>
+    </p>
+    <div class="bottom">
+      <a class="card-link" routerLink="['/edit/', product.id]">
+        Edit
+      </a>
+      <br>
+      <a class="card-link btn btn-danger" (click)="delete(product.id)">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>
