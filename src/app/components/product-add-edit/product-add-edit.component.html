@@ -1,0 +1,43 @@
+<form class="container" [formGroup]="form" (ngSubmit)="save()" #formDir="ngForm">
+  <label class="h2" for="actionType">{{actionType}} product</label>
+  <div class="form-group row">
+    <label class=" control-label col-md-12">Name</label>
+    <div class="col-md-12">
+      <input class="form-control" type="text" formControlName="name">
+    </div>
+    <span class="text-danger ml-3" *ngIf="name?.invalid && submitted">
+      Name is required.
+    </span>
+  </div>
+  <div class="form-group row">
+    <label class="control-label col-md-12" for="Price">Price</label>
+    <div class="col-md-12">
+      <input type="number" class="form-control" rows="15" formControlName="price">
+    </div>
+    <span class="text-danger ml-3" *ngIf="price?.invalid && submitted">
+      Price is required.
+    </span>
+  </div>
+  <div class="form-group row">
+    <label class="control-label col-md-8" for="Photo">Photo</label>
+    <div class="col-md-12">
+      <img *ngIf="existingProduct" [src]="environmnet.apiUrl + '/' + existingProduct.photo" class="card-img-top"
+        [alt]="existingProduct.name">
+      <input type="file" class="form-control" rows="15" formControlName="photo"
+        (change)="handleFileInput($event.target.files)">
+    </div>
+    <span class="text-danger ml-3" *ngIf="photo?.invalid && submitted">
+      Photo is required.
+    </span>
+  </div>
+  <div class="form-group row">
+    <label class="control-label col-md-12" for="LastUpdated">Last updated</label>
+    <div class="col-md-12">
+      <input class="form-control" type="text" formControlName="lastUpdated">
+    </div>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-success float-right">Save</button>
+    <button class="btn btn-secondary float-left" (click)="cancel()">Cancel</button>
+  </div>
+</form>

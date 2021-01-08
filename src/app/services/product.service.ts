@@ -4,18 +4,51 @@ import { HttpClient } from '@angular/common/http';
 import { ProductQuery } from '../models/product/product-query';
 import { ProductQueryResults } from '../models/product/product-query-results';
 import { environment } from 'src/environments/environment';
+import { Product } from '../models/product/product';
+import { ProductDto } from '../models/product/product-dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  serviceUrl: string = `${environment.apiUrl}/api/ProductCatalog/`;
+  serviceUrl: string = `${environment.apiUrl}/api/ProductCatalog`;
 
   constructor(private httpClient: HttpClient) { }
 
   getAll(query?: ProductQuery) {
     return this.httpClient.get<ProductQueryResults>(`${this.serviceUrl}?${this.getQueryParams(query)}`);
+  }
+
+  get(id: number) {
+    return this.httpClient.get<Product>(`${this.serviceUrl}/GetById?id=${id}`);
+  }
+
+  delete(id: number) {
+    return this.httpClient.delete(`${this.serviceUrl}/${id}`);
+  }
+
+  add(product: ProductDto) {
+    const formData = new FormData();
+    formData.append("photo", product.photo, product.photo.name);
+    formData.append("name", product.name);
+    formData.append("price", product.price.toString());
+
+    return this.httpClient.post<Product>(`${this.serviceUrl}`, formData);
+  }
+
+  exportExcel(query?: ProductQuery): Observable<Blob> {
+    return this.httpClient.get(`${this.serviceUrl}/ExportExcel?${this.getQueryParams(query)}`,
+      { responseType: 'blob' });
+  }
+
+  update(id: number, product: ProductDto) {
+    const formData = new FormData();
+    formData.append("photo", product.photo, product.photo.name);
+    formData.append("name", product.name);
+    formData.append("price", product.price.toString());
+
+    return this.httpClient.put<Product>(`${this.serviceUrl}/${id}`, formData);
   }
 
   getQueryParams(searchModel) {

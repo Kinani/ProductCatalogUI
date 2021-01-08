@@ -9,7 +9,7 @@
       <i>{{ product.lastUpdated | date: 'dd/MM/yyyy HH:mm'}}</i>
     </p>
     <div class="bottom">
-      <a class="card-link" routerLink="['/edit/', product.id]">
+      <a class="card-link" [routerLink]="['/edit/', product.id]">
         Edit
       </a>
       <br>

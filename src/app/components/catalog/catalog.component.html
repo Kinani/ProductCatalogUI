@@ -3,7 +3,8 @@
     <label class="h2" for="query">Search in catalog by name</label>
     <input id="query" type="text" class="form-control" [(ngModel)]="query" (keyup.enter)="loadProducts()">
   </div>
-  <button type="button" (click)="loadProducts()" class="form-control btn btn-primary">Search</button>
+  <button type="button" (click)="loadProducts()" class="form-control btn btn-primary mb-3">Search</button>
+  <button type="button" (click)="exportToExcel()" class="form-control btn btn-success mb-3">Export to Excel</button>
   <hr>
   <div class="row">
     <p *ngIf="!(productsQuery$ | async)"><em>Loading...</em></p>

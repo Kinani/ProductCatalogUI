@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ProductQueryResults } from 'src/app/models/product/product-query-results';
 import { ProductService } from 'src/app/services/product.service';
@@ -15,7 +16,8 @@ export class CatalogComponent implements OnInit {
   query: string;
   environmnet = environment;
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService,
+    private router: Router) { }
 
   ngOnInit() {
     this.loadProducts()
@@ -27,13 +29,26 @@ export class CatalogComponent implements OnInit {
     } : null);
   }
 
+  exportToExcel() {
+    this.productService.exportExcel(this.query ? {
+      name: this.query
+    } : null).subscribe(excelResult => {
+      const blob = new Blob([excelResult], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+      const link = document.createElement('a');
+      const url = window.URL.createObjectURL(blob);
+      link.href = url;
+      window.open(url);
+    });
+  }
+
   onProductDeleted(id) {
-    debugger;
-    const ans = confirm('Do you want to delete blog post with id: ' + id);
+    const ans = confirm('Do you want to delete product with id: ' + id);
     if (ans) {
-      // this.blogPostService.deleteBlogPost(postId).subscribe((data) => {
-      //   this.loadBlogPosts();
-      // });
+      this.productService.delete(id).subscribe(() => {
+        this.loadProducts();
+      });
     }
   }
 }

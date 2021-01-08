@@ -8,12 +8,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductService } from './services/product.service';
 import { CatalogProductComponent } from './components/catalog-product/catalog-product.component';
+import { ProductAddEditComponent } from './components/product-add-edit/product-add-edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CatalogComponent,
-    CatalogProductComponent
+    CatalogProductComponent,
+    ProductAddEditComponent
   ],
   imports: [
     BrowserModule,
